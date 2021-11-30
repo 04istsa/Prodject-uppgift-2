@@ -15,6 +15,7 @@ namespace Prodject_uppgift_2
             //HTest dfoi
 
             Console.WriteLine("1. Ändra eller lägg till låtar i topplistan");
+            Console.WriteLine("3. Sök efter en låt");
 
             string filnamn = @"c:\Temp\Annteckningar.txt";
             
@@ -22,7 +23,22 @@ namespace Prodject_uppgift_2
             string[] songs = new string[5];
             // string val = Console.ReadLine();
             // string filnamn = Console.ReadLine();
-            
+            if (File.Exists(filnamn))
+            {
+                songs = File.ReadAllLines(filnamn);
+
+            }
+            else
+            {
+                songs = new string[5];
+                for (int i = 0; i < songs.Length; i++)
+                {
+                    songs[i] = "tom";
+                }
+                File.WriteAllLines(filnamn, songs);
+            }
+
+
 
             switch (menyVal)
             {
@@ -45,19 +61,26 @@ namespace Prodject_uppgift_2
                     break;
                 case 3:
                     Console.WriteLine("Sök efter en låt");
-                    string sök = Console.ReadLine();
-                        
+                    string sök = Console.ReadLine().ToLower();
+                   
+                    int finns = 0;  
                     for (int i = 0; i < songs.Length; i++) {
-                        if (songs[i].Contains(sök))
+                        if (songs[i].ToLower().Contains(sök))
                         {
-                            Console.WriteLine($"{songs[i]}");
+                            Console.WriteLine($"Låten {songs[i]} finns i spel listan");
+                            finns++;
                         }
-                        else
-                        {
-                            Console.WriteLine("Låten du söker finns inte");
-                        }
-                        
+                       
+                       }
+                    if (finns == 0)
+                    {
+                        Console.WriteLine("Låten finns inte");
                     }
+                    else
+                    {
+                        Console.WriteLine($"Det finns {finns} låtar");
+                    }
+
                     break;
                     
                     
